@@ -1,0 +1,8 @@
+Agregar o modificar funcionalidades al sistema:
+1. Botón de Salir sombreado de rojo
+2. Agregar estado de impuestos pagados y pendientes al lado del total de impuestos
+3. Quitar los emojis (Ya que se pueden agregar manualmente desde el dispositivo)
+4. La tarjeta "Hogar Mejia Guerrero" que quede más al medio y con un poco más de estilo
+5. Tener un filtro que ordene por impuestos pagados o pendientes (dejar por defecto por orden de vto)
+6. Agregar una funcion que notifique el impuesto a vencer en el mismo día
+7. Que aparezca el archivo adjunto del impuesto al momento de editarlo para poder ver cual es, tambien cambiar el método para quitar el comprobante actual por otro mas elegante

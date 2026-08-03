@@ -4,22 +4,22 @@ overview: Inicializar una Web App móvil con Next.js (App Router), Tailwind CSS 
 todos:
   - id: bootstrap-nextjs
     content: Ejecutar create-next-app en f:\webbapp + instalar @supabase/supabase-js y @supabase/ssr
-    status: in_progress
+    status: completed
   - id: supabase-schema
     content: "Crear migración SQL: tablas usuarios/hogares/hogar_miembros/impuestos + RLS + trigger on_auth_user_created + bucket Storage"
-    status: pending
+    status: completed
   - id: supabase-clients
     content: Implementar lib/supabase (client, server, middleware) + middleware.ts de protección de rutas
-    status: pending
+    status: completed
   - id: auth-pages
     content: Crear páginas login/registro con flujo de creación/unión a hogar vía código invitación
-    status: pending
+    status: completed
   - id: impuesto-form
     content: "Crear ImpuestoForm.tsx: campos básicos + upload PDF/fotos a Storage + insert en impuestos"
-    status: pending
+    status: completed
   - id: dashboard
     content: Crear dashboard móvil con ImpuestoList y navegación a /impuestos/nuevo
-    status: pending
+    status: completed
 isProject: false
 ---
 
@@ -91,7 +91,7 @@ usuarios (
 
 hogares (
   id uuid PK,
-  nombre text default 'Mi hogar',
+  nombre text default 'Mejia Guerrero',
   created_at timestamptz
 )
 
