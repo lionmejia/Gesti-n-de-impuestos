@@ -161,16 +161,49 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
     });
   }
 
-  function handleRemoveExistingAttachment() {
+  async function handleRemoveExistingAttachment() {
     if (!impuestoProp?.archivo_url) return;
 
-    if (!confirmarEliminacion) {
-      setConfirmarEliminacion(true);
+    const confirmed = window.confirm(
+      "¿Seguro que querés eliminar este comprobante?"
+    );
+
+    if (!confirmed) {
       return;
     }
 
-    setRemoverArchivo(true);
-    setConfirmarEliminacion(false);
+    setLoading(true);
+    setError(null);
+
+    const supabase = createClient();
+
+    try {
+      const { error: storageError } = await supabase.storage
+        .from("impuestos-archivos")
+        .remove([impuestoProp.archivo_url]);
+
+      if (storageError) {
+        throw new Error("No se pudo eliminar el archivo del storage.");
+      }
+
+      const { error: updateError } = await supabase
+        .from("impuestos")
+        .update({ archivo_url: null, archivo_nombre: null })
+        .eq("id", impuestoProp.id);
+
+      if (updateError) {
+        throw new Error("No se pudo actualizar el impuesto.");
+      }
+
+      setRemoverArchivo(true);
+      setConfirmarEliminacion(false);
+      setArchivoHref(null);
+      setLoading(false);
+      router.refresh();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "No se pudo eliminar el comprobante.");
+      setLoading(false);
+    }
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -241,15 +274,17 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
       if (shouldRemoveAttachment) {
         await supabase.storage.from("impuestos-archivos").remove([impuestoProp.archivo_url!]);
 
-        const { error: clearError } = await supabase
-          .from("impuestos")
-          .update({ archivo_url: null, archivo_nombre: null })
-          .eq("id", impuestoProp.id);
+        if (!shouldUploadAttachment) {
+          const { error: clearError } = await supabase
+            .from("impuestos")
+            .update({ archivo_url: null, archivo_nombre: null })
+            .eq("id", impuestoProp.id);
 
-        if (clearError) {
-          setError("No se pudo quitar el comprobante.");
-          setLoading(false);
-          return;
+          if (clearError) {
+            setError("No se pudo quitar el comprobante.");
+            setLoading(false);
+            return;
+          }
         }
       }
 
@@ -595,11 +630,7 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
             </div>
             {removerArchivo ? (
               <p className="mt-2 text-xs text-rose-600">
-                Se quitará del storage al guardar.
-              </p>
-            ) : confirmarEliminacion ? (
-              <p className="mt-2 text-xs text-zinc-600">
-                Confirmá para eliminarlo definitivamente del storage.
+                El comprobante se eliminó correctamente.
               </p>
             ) : null}
           </div>
