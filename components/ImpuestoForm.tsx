@@ -69,7 +69,6 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
   );
   const [archivo, setArchivo] = useState<File | null>(null);
   const [removerArchivo, setRemoverArchivo] = useState(false);
-  const [confirmarEliminacion, setConfirmarEliminacion] = useState(false);
   const [archivoHref, setArchivoHref] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -196,7 +195,6 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
       }
 
       setRemoverArchivo(true);
-      setConfirmarEliminacion(false);
       setArchivoHref(null);
       setLoading(false);
       router.refresh();

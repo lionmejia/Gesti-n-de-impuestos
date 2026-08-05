@@ -33,7 +33,7 @@ export async function updateSession(request: NextRequest) {
   const isAuthRoute =
     pathname.startsWith("/login") || pathname.startsWith("/registro");
   const isPublicRoute =
-    isAuthRoute || pathname.startsWith("/auth/callback");
+    isAuthRoute || pathname.startsWith("/auth/callback") || pathname === "/account-status";
 
   if (!user && !isPublicRoute) {
     const url = request.nextUrl.clone();
@@ -45,6 +45,35 @@ export async function updateSession(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = "/";
     return NextResponse.redirect(url);
+  }
+
+  // If user is authenticated and accessing non-public routes, check account status
+  if (user && !isPublicRoute) {
+    try {
+      const { data: usuario } = await supabase
+        .from("usuarios")
+        .select("estado_cuenta")
+        .eq("id", user.id)
+        .single();
+
+      const estado = (usuario as { estado_cuenta?: string } )?.estado_cuenta;
+
+      if (estado === "pendiente") {
+        const url = request.nextUrl.clone();
+        url.pathname = "/account-status";
+        url.searchParams.set("status", "pendiente");
+        return NextResponse.redirect(url);
+      }
+
+      if (estado === "rechazado") {
+        const url = request.nextUrl.clone();
+        url.pathname = "/account-status";
+        url.searchParams.set("status", "rechazado");
+        return NextResponse.redirect(url);
+      }
+    } catch {
+      // on error, allow normal flow (do not block request)
+    }
   }
 
   return supabaseResponse;
