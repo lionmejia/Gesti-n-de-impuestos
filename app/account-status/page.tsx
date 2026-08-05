@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { SignOutButton } from "@/components/SignOutButton";
 
 export default async function AccountStatusPage({ searchParams }: { searchParams?: { status?: string } }) {
   const status = searchParams?.status ?? null;
@@ -45,6 +46,9 @@ export default async function AccountStatusPage({ searchParams }: { searchParams
       <div className="max-w-lg w-full rounded-2xl border bg-white p-8 text-center shadow-sm">
         <h1 className="text-2xl font-semibold text-zinc-900">{title}</h1>
         <p className="mt-4 text-zinc-600">{message}</p>
+        <div className="mt-6 flex items-center justify-center">
+          <SignOutButton />
+        </div>
       </div>
     </div>
   );
