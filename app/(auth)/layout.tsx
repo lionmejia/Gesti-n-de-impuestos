@@ -4,6 +4,8 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
+    // Layout for authentication pages
+    //  This layout provides a consistent look and feel for all authentication-related pages, such as login and registration.
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-emerald-50 to-white">
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-10">
         <div className="mb-8 text-center">
