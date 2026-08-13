@@ -24,10 +24,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) return;
 
-      const nombre =
+      const nombreRaw =
         user.user_metadata?.nombre ??
         user.email?.split("@")[0] ??
         "Usuario";
+
+      const nombre = nombreRaw
+        .trim()
+        .toLowerCase()
+        .replace(/\b\w/g, (char: string) => char.toUpperCase());
 
       setNombreUsuario(nombre);
     });
