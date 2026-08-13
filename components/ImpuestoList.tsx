@@ -114,7 +114,7 @@ export function ImpuestoList({ impuestos }: ImpuestoListProps) {
           <article
             key={impuesto.id}
             className={cn(
-              "group relative overflow-hidden rounded-2xl border bg-white p-3 shadow-sm transition-colors hover:bg-zinc-50",
+              "group relative z-0 overflow-hidden rounded-2xl border bg-white p-3 shadow-sm transition-colors hover:bg-zinc-50",
               proximo ? "border-amber-300" : "border-zinc-200"
             )}
           >
@@ -176,13 +176,13 @@ export function ImpuestoList({ impuestos }: ImpuestoListProps) {
                 ) : null}
               </div>
 
-              <div className="pointer-events-auto relative z-20 flex items-center gap-2">
-                <form action={deleteImpuesto} className="pointer-events-auto">
+              <div className="pointer-events-auto relative z-10 flex items-center gap-2">
+                <form action={deleteImpuesto} className="pointer-events-auto z-10">
                   <input type="hidden" name="impuestoId" value={impuesto.id} />
                   <button
                     type="submit"
                     aria-label={`Eliminar ${impuesto.nombre}`}
-                    className="pointer-events-auto relative z-20 cursor-pointer rounded-full border border-rose-200 bg-rose-50 p-1.5 text-rose-700 shadow-sm"
+                    className="pointer-events-auto relative z-10 cursor-pointer rounded-full border border-rose-200 bg-rose-50 p-1.5 text-rose-700 shadow-sm"
                     onClick={(event) => {
                       event.stopPropagation();
                       const confirmed = window.confirm(
