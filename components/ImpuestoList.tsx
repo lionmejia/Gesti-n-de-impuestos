@@ -96,7 +96,7 @@ export function ImpuestoList({ impuestos }: ImpuestoListProps) {
           <select
             value={orden}
             onChange={(event) => setOrden(event.target.value as OrdenImpuestos)}
-            className="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-sm font-medium text-zinc-700"
+            className="cursor-pointer rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-sm font-medium text-zinc-700"
           >
             <option value="vencimiento">Vencimiento</option>
             <option value="pendientes">Pendientes primero</option>
@@ -114,11 +114,19 @@ export function ImpuestoList({ impuestos }: ImpuestoListProps) {
           <article
             key={impuesto.id}
             className={cn(
-              "rounded-2xl border bg-white p-3 shadow-sm",
+              "group relative overflow-hidden rounded-2xl border bg-white p-3 shadow-sm transition-colors hover:bg-zinc-50",
               proximo ? "border-amber-300" : "border-zinc-200"
             )}
           >
-            <div className="flex items-start justify-between gap-2">
+            <Link
+              href={`/impuestos/${impuesto.id}/editar`}
+              aria-label={`Editar ${impuesto.nombre}`}
+              className="absolute inset-0 z-0"
+            >
+              <span className="sr-only">Editar {impuesto.nombre}</span>
+            </Link>
+
+            <div className="pointer-events-none relative z-10 flex items-start justify-between gap-2">
               <div className="flex min-w-0 items-start gap-2">
                 <div className="min-w-0">
                   <h3 className="truncate font-semibold text-zinc-900">{impuesto.nombre}</h3>
@@ -127,10 +135,12 @@ export function ImpuestoList({ impuestos }: ImpuestoListProps) {
                   </p>
                 </div>
               </div>
-              <EstadoBadge estado={impuesto.estado} />
+              <div className="pointer-events-auto">
+                <EstadoBadge estado={impuesto.estado} />
+              </div>
             </div>
 
-            <div className="mt-2 flex items-center justify-between gap-2">
+            <div className="pointer-events-none relative z-10 mt-2 flex items-center justify-between gap-2">
               <div className="flex flex-wrap items-center gap-1.5 text-xs text-zinc-600">
                 <span className="rounded-full bg-zinc-50 px-2 py-0.5">
                   📅 {formatFecha(impuesto.fecha_vencimiento)}
@@ -154,32 +164,27 @@ export function ImpuestoList({ impuestos }: ImpuestoListProps) {
                     href={impuesto.archivoHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-700 underline decoration-dotted underline-offset-2"
+                    className="pointer-events-auto rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-700 underline decoration-dotted underline-offset-2"
+                    onClick={(event) => event.stopPropagation()}
                   >
                     {impuesto.archivo_nombre ?? "Abrir comprobante"}
                   </a>
                 ) : impuesto.archivo_nombre ? (
-                  <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs">
+                  <span className="pointer-events-auto rounded-full bg-zinc-100 px-2 py-0.5 text-xs">
                     {impuesto.archivo_nombre}
                   </span>
                 ) : null}
               </div>
 
-              <div className="flex items-center gap-2">
-                <Link
-                  href={`/impuestos/${impuesto.id}/editar`}
-                  aria-label={`Editar ${impuesto.nombre}`}
-                  className="rounded-full border border-zinc-200 bg-white p-1.5 text-zinc-700 shadow-sm"
-                >
-                  ✎
-                </Link>
-                <form action={deleteImpuesto}>
+              <div className="pointer-events-auto relative z-20 flex items-center gap-2">
+                <form action={deleteImpuesto} className="pointer-events-auto">
                   <input type="hidden" name="impuestoId" value={impuesto.id} />
                   <button
                     type="submit"
                     aria-label={`Eliminar ${impuesto.nombre}`}
-                    className="cursor-pointer rounded-full border border-rose-200 bg-rose-50 p-1.5 text-rose-700 shadow-sm"
+                    className="pointer-events-auto relative z-20 cursor-pointer rounded-full border border-rose-200 bg-rose-50 p-1.5 text-rose-700 shadow-sm"
                     onClick={(event) => {
+                      event.stopPropagation();
                       const confirmed = window.confirm(
                         `¿Seguro que querés eliminar el impuesto “${impuesto.nombre}”?`
                       );

@@ -18,13 +18,13 @@ export function CodigoInvitacion({ codigo }: { codigo: string }) {
         <div>
           <p className="font-medium">Código de invitación</p>
           <p className="text-xs opacity-80">
-            Compartilo con tu pareja al registrarse
+            Compartilo con otra persona para llevar las cuentas del hogar juntos.
           </p>
         </div>
         <button
           type="button"
           onClick={copiar}
-          className="rounded-lg bg-white/80 px-3 py-2 font-mono text-sm font-bold tracking-widest"
+          className="cursor-pointer rounded-lg bg-white/80 px-3 py-2 font-mono text-sm font-bold tracking-widest"
         >
           {codigo}
         </button>

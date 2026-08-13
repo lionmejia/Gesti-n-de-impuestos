@@ -22,6 +22,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = { // Define los metadatos del documento HTML, que incluyen el título y la descripción de la aplicación.
   title: "Impuestos del Hogar", // Título de la aplicación que se mostrará en la pestaña del navegador y en los resultados de búsqueda.
   description: "Gestión compartida de impuestos del hogar", // Descripción de la aplicación que se utilizará en los metadatos del documento HTML y en los resultados de búsqueda.
+  icons: {
+    icon: [
+      { url: "/favicon.ico", rel: "icon" },
+      { url: "/icon-192.png", rel: "icon", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", rel: "icon", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
+    shortcut: "/favicon.ico",
+  },
 };
 
 // Componente de diseño raíz
