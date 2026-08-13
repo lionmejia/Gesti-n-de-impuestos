@@ -57,12 +57,12 @@ export default async function DashboardPage({
           <Alert variant="success">Impuesto guardado correctamente.</Alert>
         ) : null}
 
-        <div className="rounded-3xl border border-emerald-100 bg-linear-to-br from-emerald-50 via-white to-zinc-50 p-5 text-center shadow-sm">
+        {/* <div className="rounded-3xl border border-emerald-100 bg-linear-to-br from-emerald-50 via-white to-zinc-50 p-5 text-center shadow-sm">
           <p className="text-sm font-medium text-emerald-700">Hogar</p>
           <p className="mt-2 text-2xl font-semibold tracking-tight text-zinc-900">
             Mejia Guerrero
           </p>
-        </div>
+        </div> */}
 
         {hogarData.rol === "admin" ? (
           <CodigoInvitacion codigo={hogarData.hogar.codigo_invitacion} />
