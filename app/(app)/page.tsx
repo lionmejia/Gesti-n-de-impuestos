@@ -79,17 +79,6 @@ export default async function DashboardPage({
       </div>
 
       <ImpuestoList impuestos={impuestosConUrl} />
-
-      {(impuestos?.length ?? 0) === 0 ? (
-        <div className="px-4 pb-4">
-          <Link
-            href="/impuestos/nuevo"
-            className="flex min-h-12 items-center justify-center rounded-xl bg-emerald-600 text-sm font-medium text-white"
-          >
-            Crear primer impuesto
-          </Link>
-        </div>
-      ) : null}
     </div>
   );
 }
