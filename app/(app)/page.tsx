@@ -6,6 +6,7 @@ import { Alert } from "@/components/ui/form";
 import { getHogarDelUsuario } from "@/lib/hogar";
 import { createClient } from "@/lib/supabase/server";
 import type { Impuesto } from "@/types/database";
+import { formatMonto } from "@/lib/utils";
 
 export default async function DashboardPage({
   searchParams,
@@ -49,6 +50,9 @@ export default async function DashboardPage({
   const impuestosPagados = (impuestos ?? []).filter(
     (impuesto) => impuesto.estado === "pagado"
   ).length;
+  const montoTotalPendiente = (impuestos ?? [])
+    .filter((impuesto) => impuesto.estado === "pendiente")
+    .reduce((total, impuesto) => total + Number(impuesto.monto), 0);
 
   return (
     <div>
@@ -75,6 +79,15 @@ export default async function DashboardPage({
         </h2>
         <p className="text-sm text-zinc-500">
           {impuestosPendientes} pendientes · {impuestosPagados} pagados
+        </p>
+      </div>
+
+      <div className="mx-4 mb-3 flex items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-100 px-3 py-2">
+        <p className="truncate text-sm font-medium text-emerald-800">
+          Monto total de impuestos pendientes
+        </p>
+        <p className="shrink-0 text-base font-bold text-emerald-900">
+          {formatMonto(montoTotalPendiente)}
         </p>
       </div>
 
