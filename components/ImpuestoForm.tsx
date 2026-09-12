@@ -61,9 +61,17 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
   const { dia: initialDia, mes: initialMes, anio: initialAnio } = parseFechaValue(
     impuestoProp?.fecha_vencimiento ?? ""
   );
+  const { dia: initialDia2, mes: initialMes2, anio: initialAnio2 } = parseFechaValue(
+    impuestoProp?.fecha_vencimiento_2 ?? ""
+  );
+
   const [fechaDia, setFechaDia] = useState(initialDia);
   const [fechaMes, setFechaMes] = useState(initialMes);
   const [fechaAnio, setFechaAnio] = useState(initialAnio);
+
+  const [fechaDia2, setFechaDia2] = useState(initialDia2);
+  const [fechaMes2, setFechaMes2] = useState(initialMes2);
+  const [fechaAnio2, setFechaAnio2] = useState(initialAnio2);
   const [estado, setEstado] = useState<EstadoImpuesto>(
     impuestoProp?.estado ?? "pendiente"
   );
@@ -102,6 +110,7 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
     }
 
     const fechaVencimientoIso = buildIsoDate(fechaDia, fechaMes, fechaAnio);
+    const fechaVencimiento2Iso = buildIsoDate(fechaDia2, fechaMes2, fechaAnio2);
 
     if (fechaDia || fechaMes || fechaAnio) {
       if (!fechaVencimientoIso || !isValidDateParts(fechaDia, fechaMes, fechaAnio)) {
@@ -211,6 +220,7 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
     if (!validate()) return;
 
     const fechaVencimientoIso = buildIsoDate(fechaDia, fechaMes, fechaAnio);
+    const fechaVencimiento2Iso = buildIsoDate(fechaDia2, fechaMes2, fechaAnio2);
     const cuotasTotalesNum = cuotasTotales ? parseInt(cuotasTotales, 10) : null;
     const cuotaActualNum = cuotaActual ? parseInt(cuotaActual, 10) : null;
 
@@ -235,6 +245,7 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
         cuotas_totales: cuotasTotalesNum ?? null,
         cuota_actual: cuotaActualNum ?? null,
         fecha_vencimiento: fechaVencimientoIso || null,
+        fecha_vencimiento_2: fechaVencimiento2Iso || null,
         estado,
       };
 
@@ -335,6 +346,7 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
       cuotas_totales: cuotasTotalesNum ?? null,
       cuota_actual: cuotaActualNum ?? null,
       fecha_vencimiento: fechaVencimientoIso || null,
+      fecha_vencimiento_2: fechaVencimiento2Iso || null,
       estado,
       creado_por: user.id,
     };
@@ -501,53 +513,106 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
 
         <div className="flex flex-col gap-1.5">
           <span className="text-sm font-medium text-zinc-700">
-            Fecha de vencimiento (opcional)
+            1ra fecha de vencimiento (opcional)
           </span>
-        <div className="grid grid-cols-3 gap-2">
-          <SelectField
-            label="Día"
-            value={fechaDia}
-            onChange={(e) => setFechaDia(e.target.value)}
-          >
-            <option value="">Día</option>
-            {Array.from({ length: 31 }, (_, index) => index + 1).map((day) => (
-              <option key={day} value={String(day)}>
-                {String(day).padStart(2, "0")}
-              </option>
-            ))}
-          </SelectField>
 
-          <SelectField
-            label="Mes"
-            value={fechaMes}
-            onChange={(e) => setFechaMes(e.target.value)}
-          >
-            <option value="">Mes</option>
-            {Array.from({ length: 12 }, (_, index) => index + 1).map((month) => (
-              <option key={month} value={String(month)}>
-                {String(month).padStart(2, "0")}
-              </option>
-            ))}
-          </SelectField>
-
-          <SelectField
-            label="Año"
-            value={fechaAnio}
-            onChange={(e) => setFechaAnio(e.target.value)}
-          >
-            <option value="">Año</option>
-            {Array.from({ length: 10 }, (_, index) => new Date().getFullYear() + index).map(
-              (year) => (
-                <option key={year} value={String(year)}>
-                  {year}
+          <div className="grid grid-cols-3 gap-2">
+            <SelectField
+              label="Día"
+              value={fechaDia}
+              onChange={(e) => setFechaDia(e.target.value)}
+            >
+              <option value="">Día</option>
+              {Array.from({ length: 31 }, (_, index) => index + 1).map((day) => (
+                <option key={day} value={String(day).padStart(2, "0")}>
+                  {String(day).padStart(2, "0")}
                 </option>
-              )
-            )}
-          </SelectField>
+              ))}
+            </SelectField>
+
+            <SelectField
+              label="Mes"
+              value={fechaMes}
+              onChange={(e) => setFechaMes(e.target.value)}
+            >
+              <option value="">Mes</option>
+              {Array.from({ length: 12 }, (_, index) => index + 1).map((month) => (
+                <option key={month} value={String(month).padStart(2, "0")}>
+                  {String(month).padStart(2, "0")}
+                </option>
+              ))}
+            </SelectField>
+
+            <SelectField
+              label="Año"
+              value={fechaAnio}
+              onChange={(e) => setFechaAnio(e.target.value)}
+            >
+              <option value="">Año</option>
+              {Array.from({ length: 10 }, (_, index) => new Date().getFullYear() + index).map(
+                (year) => (
+                  <option key={year} value={String(year).padStart(4, "0")}>
+                    {year}
+                  </option>
+                )
+              )}
+            </SelectField>
+          </div>
+          {fieldErrors.fechaVencimiento ? (
+            <span className="text-sm text-red-600">{fieldErrors.fechaVencimiento}</span>
+          ) : null}
         </div>
-        {fieldErrors.fechaVencimiento ? (
-          <span className="text-sm text-red-600">{fieldErrors.fechaVencimiento}</span>
-        ) : null}
+
+        <div className="flex flex-col gap-1.5">
+          <span className="text-sm font-medium text-zinc-700">
+            2da fecha de vencimiento (opcional)
+          </span>
+
+          <div className="grid grid-cols-3 gap-2">
+            <SelectField
+              label="Día"
+              value={fechaDia2}
+              onChange={(e) => setFechaDia2(e.target.value)}
+            >
+              <option value="">Día</option>
+              {Array.from({ length: 31 }, (_, index) => index + 1).map((day) => (
+                <option key={day} value={String(day).padStart(2, "0")}>
+                  {String(day).padStart(2, "0")}
+                </option>
+              ))}
+            </SelectField>
+
+            <SelectField
+              label="Mes"
+              value={fechaMes2}
+              onChange={(e) => setFechaMes2(e.target.value)}
+            >
+              <option value="">Mes</option>
+              {Array.from({ length: 12 }, (_, index) => index + 1).map((month) => (
+                <option key={month} value={String(month).padStart(2, "0")}>
+                  {String(month).padStart(2, "0")}
+                </option>
+              ))}
+            </SelectField>
+
+            <SelectField
+              label="Año"
+              value={fechaAnio2}
+              onChange={(e) => setFechaAnio2(e.target.value)}
+            >
+              <option value="">Año</option>
+              {Array.from({ length: 10 }, (_, index) => new Date().getFullYear() + index).map(
+                (year) => (
+                  <option key={year} value={String(year).padStart(4, "0")}>
+                    {year}
+                  </option>
+                )
+              )}
+            </SelectField>
+          </div>
+          {fieldErrors.fechaVencimiento ? (
+            <span className="text-sm text-red-600">{fieldErrors.fechaVencimiento}</span>
+          ) : null}
         </div>
       </div>
 
@@ -640,7 +705,7 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
 
       {error ? <Alert>{error}</Alert> : null}
 
-      <div className="fixed bottom-16 left-1/2 z-20 w-full max-w-lg -translate-x-1/2 px-4">
+      <div className="fixed bottom-20 left-1/2 z-50 w-full max-w-lg -translate-x-1/2 px-4">
         <Button type="submit" disabled={loading} className="w-full shadow-lg">
           {loading ? "Guardando..." : impuestoProp ? "Guardar cambios" : "Guardar impuesto"}
         </Button>

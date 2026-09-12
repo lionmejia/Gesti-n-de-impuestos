@@ -145,6 +145,11 @@ export function ImpuestoList({ impuestos }: ImpuestoListProps) {
                 <span className="rounded-full bg-zinc-50 px-2 py-0.5">
                   📅 {formatFecha(impuesto.fecha_vencimiento)}
                 </span>
+                {impuesto.fecha_vencimiento_2 ? (
+                  <span className="rounded-full bg-zinc-50 px-2 py-0.5">
+                    📅 {formatFecha(impuesto.fecha_vencimiento_2)}
+                  </span>
+                ) : null}
                 {impuesto.cuotas_totales != null || impuesto.cuota_actual != null ? (
                   <span className="rounded-full bg-violet-50 px-2 py-0.5 font-medium text-violet-700">
                     {impuesto.cuotas_totales != null && impuesto.cuota_actual != null

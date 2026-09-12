@@ -31,6 +31,7 @@ export interface Impuesto {
   cuotas_totales: number | null;
   cuota_actual: number | null;
   fecha_vencimiento: string | null;
+  fecha_vencimiento_2: string | null;
   estado: EstadoImpuesto;
   emoji: string | null;
   archivo_url: string | null;
@@ -43,3 +44,7 @@ export interface HogarConMembresia {
   hogar: Hogar;
   rol: RolHogar;
 }
+
+export const setFechaDia = (value: string) => {
+  setFechaDia(value);
+};

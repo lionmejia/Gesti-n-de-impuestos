@@ -9,11 +9,8 @@ export function formatMonto(monto: number, moneda = "ARS"): string {
 export function formatFecha(fecha: string | null | undefined): string {
   if (!fecha) return "Sin fecha";
 
-  return new Intl.DateTimeFormat("es-AR", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(new Date(fecha + "T12:00:00"));
+  const [anio, mes, dia] = fecha.split("-");
+  return `${dia}/${mes}/${anio}`;
 }
 
 export function diasHastaVencimiento(fecha: string | null | undefined): number | null {
