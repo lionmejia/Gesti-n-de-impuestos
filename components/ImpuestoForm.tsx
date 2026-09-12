@@ -665,21 +665,16 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
                   className="rounded-full border border-zinc-200 bg-white p-2 text-zinc-700"
                   aria-label="Cambiar comprobante actual"
                 >
-                  ✎
+                  ⇄
                 </button>
                 <a
                   href={archivoHref ?? "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={(event) => {
-                    if (!archivoHref) {
-                      event.preventDefault();
-                    }
-                  }}
-                  className="rounded-full border border-zinc-200 bg-white p-2 text-zinc-700"
                   aria-label="Abrir comprobante actual"
+                  className="rounded-full border border-zinc-200 bg-white p-2 text-zinc-700"
                 >
-                  ↗
+                  👁️
                 </a>
                 <button
                   type="button"
@@ -687,7 +682,7 @@ export function ImpuestoForm({ hogarId, impuesto: impuestoProp }: ImpuestoFormPr
                   className="rounded-full border border-rose-200 bg-rose-50 p-2 text-rose-700"
                   aria-label="Quitar comprobante actual"
                 >
-                  ×
+                  🗑️
                 </button>
               </div>
             </div>
