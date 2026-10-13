@@ -1,21 +1,21 @@
-@import "tailwindcss";
+@import "tailwindcss"; /* Importa las utilidades de Tailwind CSS para que puedan ser utilizadas en el archivo CSS global. */
 
 /* Global styles */
-:root {
-  --background: #f5f5f5;
-  --foreground: #171717;
+:root { /* Define variables CSS para los colores de fondo y primer plano que se utilizarán en toda la aplicación. */
+  --background: #f5f5f5; /* Color de fondo predeterminado para la aplicación. */
+  --foreground: #171717; /* Color de primer plano predeterminado para la aplicación. */
 }
 /* Dark mode styles */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #f5f5f5;
-    --foreground: #171717;
+@media (prefers-color-scheme: dark) { /* Aplica estilos específicos cuando el usuario tiene habilitado el modo oscuro en su sistema operativo. */
+  :root { /* Define variables CSS para los colores de fondo y primer plano en modo oscuro. */
+    --background: #f5f5f5; /* Color de fondo en modo oscuro. */
+    --foreground: #171717; /* Color de primer plano en modo oscuro. */
   }
 }
 
 /* Font styles */
-body {
-  background: #f5f5f5;
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+body { /* Aplica estilos al elemento <body> de la aplicación. */
+  background: #f5f5f5; /* Establece el color de fondo del cuerpo de la aplicación. */
+  color: var(--foreground); /* Establece el color del texto del cuerpo de la aplicación utilizando la variable CSS definida anteriormente. */
+  font-family: var(--font-geist-sans), system-ui, sans-serif; /* Establece la familia de fuentes del cuerpo de la aplicación utilizando la variable CSS definida anteriormente, con una fuente de respaldo del sistema y una fuente sans-serif. */
 }

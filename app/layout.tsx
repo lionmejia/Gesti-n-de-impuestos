@@ -1,4 +1,4 @@
-//Este es un archivo de diseño para una aplicación Next.js. Configura los estilos y fuentes globales de la aplicación, así como los metadatos del documento HTML.
+//Este es un archivo de diseño para una aplicación Next.js. Configura los estilos y fuentes globales de la aplicación, así como los metadatos del documento HTML, estilos base.
 
 import type { Metadata } from "next"; // Importa el tipo Metadata de Next.js, que se utiliza para definir los metadatos del documento HTML.
 import { Geist, Geist_Mono } from "next/font/google"; // Importa las fuentes Geist y Geist Mono desde Google Fonts utilizando la función next/font/google. Estas fuentes se utilizarán en toda la aplicación.
@@ -22,14 +22,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = { // Define los metadatos del documento HTML, que incluyen el título y la descripción de la aplicación.
   title: "Impuestos del Hogar", // Título de la aplicación que se mostrará en la pestaña del navegador y en los resultados de búsqueda.
   description: "Gestión compartida de impuestos del hogar", // Descripción de la aplicación que se utilizará en los metadatos del documento HTML y en los resultados de búsqueda.
-  icons: {
+  icons: { // Define los iconos de la aplicación que se utilizarán en diferentes contextos, como el favicon y los iconos para dispositivos móviles.
     icon: [
-      { url: "/favicon.ico", rel: "icon" },
-      { url: "/icon-192.png", rel: "icon", type: "image/png", sizes: "192x192" },
-      { url: "/icon-512.png", rel: "icon", type: "image/png", sizes: "512x512" },
+      { url: "/favicon.ico", rel: "icon" }, // Define el favicon de la aplicación, que se mostrará en la pestaña del navegador.
+      { url: "/icon-192.png", rel: "icon", type: "image/png", sizes: "192x192" }, // Define un icono adicional de 192x192 píxeles para la aplicación, que se puede utilizar en dispositivos móviles y otras plataformas.
+      { url: "/icon-512.png", rel: "icon", type: "image/png", sizes: "512x512" }, // Define un icono adicional de 512x512 píxeles para la aplicación, que se puede utilizar en dispositivos móviles y otras plataformas.
     ],
-    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
-    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }], // Define un icono específico para dispositivos Apple, que se mostrará cuando los usuarios agreguen la aplicación a su pantalla de inicio.
+    shortcut: "/favicon.ico", // Define un acceso directo al favicon de la aplicación, que se puede utilizar en navegadores y otras plataformas.
   },
 };
 
